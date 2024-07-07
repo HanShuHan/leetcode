@@ -1,7 +1,11 @@
+from collections import deque
+
 if __name__ == '__main__':
     # Start from here
-    setA = set([1,2,3])
-    set()
-    r = range(1, 3)
-    l = list(r)
-    print(l)
+    dict()
+    list()
+    q = deque([1,2])
+    q.append(3)
+    t = tuple()
+    print(q)
+    print(t)
