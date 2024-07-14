@@ -1,11 +1,8 @@
+import heapq
 from collections import deque
+from heapq import heappush
 
 if __name__ == '__main__':
     # Start from here
-    dict()
-    list()
-    q = deque([1,2])
-    q.append(3)
-    t = tuple()
-    print(q)
-    print(t)
+    for i in range(1,3):
+        print(i)
