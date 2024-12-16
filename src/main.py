@@ -1,3 +1,6 @@
+from collections import Counter, defaultdict
+
+
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         if (m, n) == (0, 0):
@@ -20,6 +23,8 @@ class Solution:
 
 
 if __name__ == '__main__':
-    # Start from here
-    dp = [[1] * 3 for _ in range(10)]
-    print(dp)
+    d = defaultdict(int)
+    arr = [1, 2, 3]
+    a = str(arr)
+    d[arr] += 1
+    print(d)
