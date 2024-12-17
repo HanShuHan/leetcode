@@ -1,30 +1,23 @@
 from collections import Counter, defaultdict
 
 
-class Solution:
-    def uniquePaths(self, m: int, n: int) -> int:
-        if (m, n) == (0, 0):
-            return 0
+class Solution(object):
+    def longestZigZag(self, root):
+        count = 0
+        max_path_len = 0
+        direction = ''
 
-        pathsCount = 0
-        curPosOfPaths = deque([[0, 0]])
+        def dfs(node):
+            if not node:
+                return
 
-        while curPosOfPaths:
-            pos = curPosOfPaths.popleft()
+            nonlocal count
+            print(count)
+            nonlocal max_path_len
+            nonlocal direction
 
-            if pos == [m - 1, n - 1]:
-                pathsCount += 1
-            if pos[0] < m:
-                curPosOfPaths.append([pos[0] + 1, pos[1]])
-            if pos[1] < n:
-                curPosOfPaths.append([pos[0], pos[1] + 1])
-
-        return pathsCount
+        dfs(root)
 
 
 if __name__ == '__main__':
-    d = defaultdict(int)
-    arr = [1, 2, 3]
-    a = str(arr)
-    d[arr] += 1
-    print(d)
+    Solution().longestZigZag(1)

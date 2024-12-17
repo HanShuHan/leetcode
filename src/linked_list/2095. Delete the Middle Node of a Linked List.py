@@ -1,23 +1,23 @@
-from charset_normalizer.md import Optional
-
-
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 
 
-class Solution:
-    def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        prev = ListNode(0, head)
-        slow = prev
-        fast = prev
+class Solution(object):
+    def deleteMiddle(self, head):
+        if not head.next:
+            return None
 
-        while fast.next is not None and fast.next.next is not None:
-            slow = slow.next
+        slow = fast = head
+        prev = None
+
+        while fast and fast.next:
             fast = fast.next.next
+            prev = slow
+            slow = slow.next
 
-        slow.next = slow.next.next
+        prev.next = slow.next
 
-        return prev.next
+        return head
