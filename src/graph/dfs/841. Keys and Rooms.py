@@ -1,17 +1,17 @@
-class Solution:
-    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
-        keys = set(rooms[0])
-        roomsOpen = {0}
+from collections import deque
+
+
+class Solution(object):
+    def canVisitAllRooms(self, rooms):
+        rooms_opened = [0]
+        keys = rooms[0]
 
         while keys:
             key = keys.pop()
-            roomsOpen.add(key)
-            newKeys = rooms[key]
+            if key not in rooms_opened:
+                rooms_opened.append(key)
+                for k in rooms[key]:
+                    if k not in rooms_opened:
+                        keys.append(k)
 
-            while newKeys:
-                newKey = newKeys.pop()
-
-                if newKey not in roomsOpen and newKey not in keys:
-                    keys.add(newKey)
-
-        return len(roomsOpen) == len(rooms)
+        return len(rooms_opened) == len(rooms)

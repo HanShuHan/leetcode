@@ -7,26 +7,30 @@ from collections import deque
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-
 class Solution(object):
-    def rightSideView(self, root):
-        if not root:
-            return []
+    def maxLevelSum(self, root):
+        if not root.left and not root.right:
+            return 1
 
-        result = []
+        curr_level = 0
+        level = 1
         queue = deque([root])
+        max_sum = root.val
 
         while queue:
-            size = len(queue)
-            for i in range(size):
+            row_sum = 0
+            curr_level += 1
+            for i in range(len(queue)):
                 node = queue.popleft()
-                if i == size - 1:
-                    result.append(node.val)
+                row_sum += node.val
 
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
 
-        return result
+            if row_sum > max_sum:
+                max_sum = row_sum
+                level = curr_level
+
+        return level

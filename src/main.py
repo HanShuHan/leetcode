@@ -20,4 +20,6 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    Solution().longestZigZag(1)
+    new_row, new_col = 1 + 1, 2 + 2
+    print(new_row)
+    print(new_col)
