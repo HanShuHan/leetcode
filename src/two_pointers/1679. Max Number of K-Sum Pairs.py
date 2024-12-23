@@ -1,21 +1,25 @@
 class Solution(object):
     def maxOperations(self, nums, k):
+        size = len(nums)
+
+        if size == 1:
+            return 0
+
+        count = 0
+        left, right = 0, size - 1
+        average = k // 2
+
         nums.sort()
 
-        left = 0
-        right = len(nums) - 1
-        count = 0
+        while left < right and nums[left] <= average:
+            curr_sum = nums[left] + nums[right]
 
-        while left < right:
-            sum = nums[left] + nums[right]
-
-            if sum == k:
-                left += 1
+            if curr_sum > k:
                 right -= 1
+            elif curr_sum == k:
                 count += 1
-            elif sum < k:
-                left += 1
+                left, right = left + 1, right - 1
             else:
-                right -= 1
+                left += 1
 
         return count

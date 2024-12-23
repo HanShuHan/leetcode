@@ -3,23 +3,23 @@ from collections import deque
 
 class Solution(object):
     def predictPartyVictory(self, senate):
-        cycle = len(senate)
-        radiants = deque()
-        dires = deque()
+        radiant = deque()
+        dire = deque()
+        n = len(senate)
 
-        for i, s in enumerate(senate):
-            if s == 'R':
-                radiants.append(i)
-            else:
-                dires.append(i)
+        for i in range(n):
+            if senate[i] == 'R':
+                radiant.append(i)
+            elif senate[i] == 'D':
+                dire.append(i)
 
-        while radiants and dires:
-            r = radiants.popleft()
-            d = dires.popleft()
+        while radiant and dire:
+            r = radiant.popleft()
+            d = dire.popleft()
 
             if r < d:
-                radiants.append(r + cycle)
+                radiant.append(r + n)
             else:
-                dires.append(d + cycle)
+                dire.append(d + n)
 
-        return 'Radiant' if radiants else 'Dire'
+        return 'Radiant' if radiant else 'Dire'

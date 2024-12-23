@@ -1,18 +1,33 @@
+from collections import deque
+
+
 class Solution(object):
     def longestSubarray(self, nums):
-        count_zero = 0
-        left = 0
-        max_length = 0
+        size = len(nums)
 
-        for right in range(len(nums)):
-            if nums[right] == 0:
-                count_zero += 1
+        if size == 1:
+            return 0
 
-            while count_zero > 1:
-                left += 1
-                if nums[left - 1] == 0:
-                    count_zero -= 1
+        queue = deque([])
+        zeros = 0
+        max_len = 0
 
-            max_length = max(max_length, right - left)
+        for num in nums:
+            queue.append(num)
 
-        return max_length
+            if num == 0:
+                zeros += 1
+
+            while zeros > 1:
+                left = queue.popleft()
+                if left == 0:
+                    zeros -= 1
+
+            curr_len = len(queue) - zeros
+            if curr_len > max_len:
+                max_len = curr_len
+
+        if max_len == size:
+            max_len -= 1
+
+        return max_len

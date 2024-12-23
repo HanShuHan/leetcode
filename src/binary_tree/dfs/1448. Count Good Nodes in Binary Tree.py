@@ -7,22 +7,21 @@
 class Solution(object):
 
     def __init__(self):
-        self._good = 0
+        self.count = 0
 
     def goodNodes(self, root):
-        self.goodNode(root, root.val)
-        return self._good
+        def dfs(node, curr_max):
+            if node.val >= curr_max:
+                self.count += 1
 
-    def goodNode(self, node, max_val):
-        if not node:
-            return
+            if node.val > curr_max:
+                curr_max = node.val
 
-        if node.val >= max_val:
-            self._good += 1
+            if node.left:
+                dfs(node.left, curr_max)
+            if node.right:
+                dfs(node.right, curr_max)
 
-        max_val = max(node.val, max_val)
+        dfs(root, root.val)
 
-        if node.left:
-            self.goodNode(node.left, max_val)
-        if node.right:
-            self.goodNode(node.right, max_val)
+        return self.count

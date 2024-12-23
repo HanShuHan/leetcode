@@ -5,19 +5,21 @@
 #         self.next = next
 class Solution(object):
     def oddEvenList(self, head):
-        if not head or not head.next or not head.next.next:
+        if not head:
+            return None
+
+        if head.next is None:
             return head
 
-        odd = head
-        even = head.next
-        even_head = even
+        odd, even = head, head.next
+        curr_odd, curr_even = odd, even
 
-        while even and even.next:
-            odd.next = even.next
-            odd = odd.next
-            even.next = odd.next
-            even = even.next
+        while curr_even and curr_even.next:
+            curr_odd.next = curr_even.next
+            curr_odd = curr_odd.next
+            curr_even.next = curr_odd.next
+            curr_even = curr_even.next
 
-        odd.next = even_head
+        curr_odd.next = even
 
-        return head
+        return odd

@@ -1,19 +1,36 @@
+from collections import deque
+
+
 class Solution(object):
     def maxVowels(self, s, k):
+        s_len = len(s)
         vowels = set('aeiou')
-        vowels_count = 0
-        max_vowels_count = 0
 
-        for i in range(0, k):
-            if s[i] in vowels:
-                vowels_count += 1
-        max_vowels_count = vowels_count
+        if s_len == 1:
+            return int(s in vowels)
 
-        for i in range(k, len(s)):
-            if s[i] in vowels:
-                vowels_count += 1
-            if s[i - k] in vowels:
-                vowels_count -= 1
-            max_vowels_count = max(max_vowels_count, vowels_count)
+        sliding_window = deque([])
+        count = max_count = 0
 
-        return max_vowels_count
+        for i in range(k):
+            is_vowel = int(s[i] in vowels)
+            sliding_window.append(is_vowel)
+            count += is_vowel
+
+        max_count = count
+        if max_count == k:
+            return max_count
+
+        for j in range(k, s_len):
+            left_most = sliding_window.popleft()
+            right_most = int(s[j] in vowels)
+
+            sliding_window.append(right_most)
+            count += (right_most - left_most)
+            if count > max_count:
+                max_count = count
+
+            if max_count == k:
+                break
+
+        return max_count

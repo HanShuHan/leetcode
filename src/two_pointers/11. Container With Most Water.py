@@ -1,25 +1,29 @@
 class Solution(object):
     def maxArea(self, height):
-        left = 0
-        right = len(height) - 1
-        max_h = max(height)
-        max_area = 0
+        size = len(height)
+        left, right = 0, size - 1
+        h = min(height[left], height[right])
+
+        if size == 2:
+            return h
+
+        max_capacity = 0
+        max_height = max(height)
 
         while left < right:
-            h1 = height[left]
-            h2 = height[right]
-            h = min(h1, h2)
-            width = right - left
-            area = width * h
+            w = right - left
+            h = min(height[left], height[right])
+            capacity = w * h
 
-            if area > max_area:
-                max_area = area
-            if h1 < h2:
-                left += 1
-            else:
-                right -= 1
+            if capacity > max_capacity:
+                max_capacity = capacity
 
-            if max_area >= max_h * width:
+            if max_capacity == w * max_height:
                 break
 
-        return max_area
+            if height[left] > height[right]:
+                right -= 1
+            else:
+                left += 1
+
+        return max_capacity

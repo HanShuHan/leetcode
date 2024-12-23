@@ -7,17 +7,17 @@
 
 class Solution(object):
     def deleteMiddle(self, head):
-        if not head.next:
+        if head.next is None:
             return None
 
-        slow = fast = head
-        prev = None
+        # 0, 1, 2, 3, 4, 5, 6, 7
+        curr = slow = fast = head
 
         while fast and fast.next:
-            fast = fast.next.next
-            prev = slow
+            curr = slow
             slow = slow.next
+            fast = fast.next.next
 
-        prev.next = slow.next
+        curr.next = slow.next
 
         return head

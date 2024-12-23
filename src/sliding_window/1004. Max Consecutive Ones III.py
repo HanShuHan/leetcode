@@ -1,18 +1,25 @@
+from collections import deque
+
+
 class Solution(object):
     def longestOnes(self, nums, k):
-        zero_count = 0
-        left = 0
-        max_length = 0
+        queue = deque([])
+        zeros = 0
+        max_len = 0
 
-        for right in range(len(nums)):
-            if nums[right] == 0:
-                zero_count += 1
+        for num in nums:
+            queue.append(num)
 
-            while zero_count > k:
-                left += 1
-                if nums[left - 1] == 0:
-                    zero_count -= 1
+            if num == 0:
+                zeros += 1
 
-            max_length = max(max_length, right - left + 1)
+            while zeros > k:
+                left = queue.popleft()
+                if left == 0:
+                    zeros -= 1
 
-        return max_length
+            curr_size = len(queue)
+            if curr_size > max_len:
+                max_len = curr_size
+
+        return max_len
