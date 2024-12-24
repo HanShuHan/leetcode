@@ -1,22 +1,23 @@
 class Solution(object):
     def minEatingSpeed(self, piles, h):
-        left, right = 1, max(piles)
+        piles_len = len(piles)
+        max_pile = max(piles)
 
-        def can_finish(k):
-            total = 0
-            for pile in piles:
-                total += (pile + k - 1) // k
-            return total <= h
+        if piles_len == h:
+            return max_pile
+
+        left, right = 1, max_pile
 
         while left < right:
             mid = (left + right) // 2
-            if can_finish(mid):
-                right = mid
-            else:
+            hours = 0
+
+            for pile in piles:
+                hours += (pile + mid - 1) // mid
+
+            if hours > h:
                 left = mid + 1
+            else:
+                right = mid
 
         return left
-
-
-if __name__ == '__main__':
-    Solution().minEatingSpeed([3, 6, 7, 11], 8)

@@ -3,24 +3,30 @@ import heapq
 
 class Solution(object):
     def maxScore(self, nums1, nums2, k):
-        sorted_nums_pairs = sorted(zip(nums2, nums1), reverse=True)
-        heap = []
-        curr_sum = 0
+        nums_len = len(nums1)
+
+        if nums_len == 1:
+            return nums1[0] * nums2[0]
+
+        new_nums = sorted([(n2, n1) for n1, n2 in zip(nums1, nums2)], reverse=True)
+        heap_n1 = []
+        sum_of_n1 = 0
+        min_of_n2 = new_nums[k - 1][0]
 
         for i in range(k):
-            num1 = sorted_nums_pairs[i][1]
-            heapq.heappush(heap, num1)
-            curr_sum += num1
-            max_val = curr_sum * sorted_nums_pairs[k - 1][0]
+            n1 = new_nums[i][1]
+            heapq.heappush(heap_n1, n1)
+            sum_of_n1 += n1
+        max_product = sum_of_n1 * min_of_n2
 
-        for i in range(k, len(sorted_nums_pairs)):
-            new_num1 = sorted_nums_pairs[i][1]
+        for j in range(k, nums_len):
+            new_n1 = new_nums[j][1]
 
-            if new_num1 > heap[0]:
-                curr_sum -= heap[0]
-                curr_sum += new_num1
-                heapq.heapreplace(heap, new_num1)
+            if new_n1 > heap_n1[0]:
+                sum_of_n1 += (new_n1 - heap_n1[0])
+                heapq.heappushpop(heap_n1, new_n1)
+                min_of_n2 = new_nums[j][0]
 
-            max_val = max(curr_sum * sorted_nums_pairs[i][0], max_val)
+                max_product = max(sum_of_n1 * min_of_n2, max_product)
 
-        return max_val
+        return max_product

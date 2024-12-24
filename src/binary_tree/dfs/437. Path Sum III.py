@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, val=0, left=None, right=None):
@@ -5,22 +8,31 @@
 #         self.left = left
 #         self.right = right
 class Solution(object):
+
+    def __init__(self):
+        self.targetSum = None
+        self.count = 0
+        self.path_sum = defaultdict(int)
+        self.path_sum[0] = 1
+
     def pathSum(self, root, targetSum):
-        recorded_sum = {0: 1}
+        if not root:
+            return 0
 
-        def dfs(node, accum_sum):
-            if not node:
-                return 0
+        self.targetSum = targetSum
 
-            accum_sum += node.val
-            count = recorded_sum.get(accum_sum - targetSum, 0)
-            recorded_sum[accum_sum] = recorded_sum.get(accum_sum, 0) + 1
+        def dfs(node, curr_sum):
+            curr_sum += node.val
+            self.count += self.path_sum[curr_sum - self.targetSum]
+            self.path_sum[curr_sum] += 1
 
-            count += dfs(node.left, accum_sum)
-            count += dfs(node.right, accum_sum)
+            if node.left:
+                dfs(node.left, curr_sum)
+            if node.right:
+                dfs(node.right, curr_sum)
 
-            recorded_sum[accum_sum] = recorded_sum.get(accum_sum) - 1
+            self.path_sum[curr_sum] -= 1
 
-            return count
+        dfs(root, 0)
 
-        return dfs(root, 0)
+        return self.count

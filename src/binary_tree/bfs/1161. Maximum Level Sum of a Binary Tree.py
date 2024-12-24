@@ -9,28 +9,27 @@ from collections import deque
 #         self.right = right
 class Solution(object):
     def maxLevelSum(self, root):
-        if not root.left and not root.right:
-            return 1
-
-        curr_level = 0
-        level = 1
         queue = deque([root])
-        max_sum = root.val
+        max_sum, level = root.val, 1
+        curr_level = 0
 
         while queue:
-            row_sum = 0
+            queue_len = len(queue)
+            curr_sum = 0
             curr_level += 1
-            for i in range(len(queue)):
+
+            for i in range(queue_len):
                 node = queue.popleft()
-                row_sum += node.val
+
+                curr_sum += node.val
 
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
 
-            if row_sum > max_sum:
-                max_sum = row_sum
+            if curr_sum > max_sum:
+                max_sum = curr_sum
                 level = curr_level
 
         return level

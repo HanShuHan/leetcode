@@ -1,10 +1,15 @@
 class Solution(object):
+
+    def __init__(self):
+        self.result = []
+
     def letterCombinations(self, digits):
-        if not digits:
+        digits_len = len(digits)
+
+        if digits_len == 0:
             return []
 
-        result = []
-        phone_map = {
+        mapping = {
             '2': 'abc',
             '3': 'def',
             '4': 'ghi',
@@ -14,18 +19,19 @@ class Solution(object):
             '8': 'tuv',
             '9': 'wxyz'
         }
+        combination = []
 
-        def backtrack(index, path):
-            if index == len(digits):
-                result.append(''.join(path))
+        def dfs(index, _combination):
+            if index == digits_len:
+                self.result.append(''.join(_combination))
                 return
 
-            letters = phone_map[digits[index]]
+            letters = mapping[digits[index]]
             for letter in letters:
-                path.append(letter)
-                backtrack(index + 1, path)
-                path.pop()
+                combination.append(letter)
+                dfs(index + 1, combination)
+                combination.pop()
 
-        backtrack(0, [])
+        dfs(0, combination)
 
-        return result
+        return self.result

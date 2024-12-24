@@ -1,22 +1,23 @@
-from collections import defaultdict
-
-
 class Solution(object):
 
     def findCircleNum(self, isConnected):
+        n = len(isConnected)
+
+        if n == 1:
+            return 1
+
+        visited_city = [0] * n
         provinces = 0
-        size = len(isConnected)
-        cities_visited = [False] * size
 
         def dfs(city):
-            cities_visited[city] = True
+            visited_city[city] = 1
 
-            for j in range(size):
-                if j != city and isConnected[city][j] and not cities_visited[j]:
+            for j in range(n):
+                if j != city and isConnected[city][j] and not visited_city[j]:
                     dfs(j)
 
-        for i in range(size):
-            if not cities_visited[i]:
+        for i in range(n):
+            if not visited_city[i]:
                 dfs(i)
                 provinces += 1
 
