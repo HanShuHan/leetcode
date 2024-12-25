@@ -1,22 +1,19 @@
+import bisect
 from collections import deque
 
 
-class RecentCounter:
+class RecentCounter(object):
 
     def __init__(self):
-        self.__myQueue = deque()
-        self.__counter = 0
+        self.arr = deque()
 
-    def ping(self, t: int) -> int:
-        self.__myQueue.append(t)
-        self.__counter += 1
+    def ping(self, t):
+        self.arr.append(t)
 
-        upper = t - 3000
-        while self.__myQueue[0] < upper:
-            self.__myQueue.popleft()
-            self.__counter -= 1
+        while self.arr and self.arr[0] < t - 3000:
+            self.arr.popleft()
 
-        return self.__counter
+        return len(self.arr)
 
 # Your RecentCounter object will be instantiated and called as such:
 # obj = RecentCounter()

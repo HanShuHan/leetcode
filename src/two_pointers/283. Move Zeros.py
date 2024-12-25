@@ -1,17 +1,19 @@
-class Solution:
-    def moveZeroes(self, nums: list[int]) -> None:
-        lastIdx = self.lastIndexOfNonZero(nums)
+class Solution(object):
+    def isSubsequence(self, s, t):
+        s_len = len(s)
+        t_len = len(t)
 
-        i = 0
-        for count in range(lastIdx + 1):
-            if nums[i] == 0:
-                zero = nums.pop(i)
-                nums.append(zero)
-            else:
+        if s_len == 0:
+            return True
+
+        if s_len > t_len:
+            return False
+
+        i, j = 0, 0
+
+        while i < s_len and j < t_len:
+            if s[i] == t[j]:
                 i += 1
+            j += 1
 
-    def lastIndexOfNonZero(self, nums: list[int]) -> int:
-        for i in range(len(nums) - 1, -1, -1):
-            if nums[i] != 0:
-                return i
-        return -1
+        return i == s_len

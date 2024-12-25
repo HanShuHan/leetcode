@@ -1,38 +1,46 @@
-class Trie(object):
+from sortedcontainers import SortedDict
+
+
+class Solution(object):
     class Node(object):
         def __init__(self):
             self.children = {}
-            self.is_end = False
+            self.suggestions = []
 
     def __init__(self):
         self.root = self.Node()
 
-    def insert(self, word):
+    def insert(self, product):
         node = self.root
-        for char in word:
-            if char not in node.children:
-                node.children[char] = self.Node()
-            node = node.children[char]
-        node.is_end = True
 
-    def search(self, word):
+        for letter in product:
+            if letter not in node.children:
+                node.children[letter] = self.Node()
+            node = node.children[letter]
+
+            node.suggestions.append(product)
+            node.suggestions.sort()
+            if len(node.suggestions) > 3:
+                node.suggestions.pop()
+
+    def suggestedProducts(self, products, searchWord):
+        for product in products:
+            self.insert(product)
+
+        result = []
+
         node = self.root
-        for char in word:
+        for char in searchWord:
             if char not in node.children:
-                return False
-            node = node.children[char]
-        return node.is_end
+                result.append([])
+                break
 
-    def startsWith(self, prefix):
-        node = self.root
-        for char in prefix:
-            if char not in node.children:
-                return False
+            result.append(node.children[char].suggestions)
             node = node.children[char]
-        return True
 
-# Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
+        result_len = len(result)
+        search_word_len = len(searchWord)
+        if result_len < search_word_len:
+            result.extend([[] for _ in range(search_word_len - result_len)])
+
+        return result
