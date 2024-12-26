@@ -2,12 +2,19 @@ class Solution(object):
     def minDistance(self, word1, word2):
         m, n = len(word1), len(word2)
 
-        if m == n == 0:
-            return 0
-        elif m == 0:
+        if m == 0:
             return n
-        elif n == 0:
+
+        if n == 0:
             return m
+
+        if m == n == 1:
+            return 1
+
+        # 0   1, 2, 3, 4, 5, 6
+        #   |-----------------
+        # 1 | 0, 1, 2, 3, 4, 5
+        # 2 | 1,
 
         count = [[0] * (n + 1) for _ in range(m + 1)]
         for j in range(1, n + 1):
