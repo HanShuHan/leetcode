@@ -1,16 +1,6 @@
-class Solution(object):
-    def canPlaceFlowers(self, flowerbed, n):
-        flowerbed.insert(0, 0)
-        flowerbed.append(0)
-        i = 1
+if __name__ == '__main__':
+    s = "A man, src plan, src canal: Panama"
 
-        while n > 0 and i < len(flowerbed) - 1:
-            prev, curr, next = flowerbed[i - 1], flowerbed[i], flowerbed[i + 1]
 
-            if prev == curr == next == 0:
-                n -= 1
-                flowerbed[i] = 1
-
-            i += 1
-
-        return n == 0
+    for _s in s:
+        s.lower()
